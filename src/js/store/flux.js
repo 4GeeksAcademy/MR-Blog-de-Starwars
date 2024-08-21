@@ -1,6 +1,10 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
+			personas: [],
+			vehiculos: [],
+			planetas: [],
+			favoritos: [],
 			demo: [
 				{
 					title: "FIRST",
@@ -37,6 +41,40 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				//reset the global store
 				setStore({ demo: demo });
+			}, 
+			
+			loadInitialData: () => {
+				getActions().fetchPersonas();
+				getActions().fetchVehiculos();
+				getActions().fetchPlanetas();
+			},
+
+			fetchPersonas: async () => {
+				const response = await fetch("https://www.swapi.tech/api/people");
+				const data = await response.json();
+				setStore({ personas: data.results });
+			},
+
+			fetchVehiculos: async () => {
+				const response = await fetch("https://www.swapi.tech/api/vehicles");
+				const data = await response.json();
+				setStore({ vehiculos: data.results });
+			},
+
+			fetchPlanetas: async () => {
+				const response = await fetch("https://www.swapi.tech/api/planets");
+				const data = await response.json();
+				setStore({ planetas: data.results });
+			},
+
+			toggleFavorito: (item, remove = false) => {
+				const store = getStore();
+				const favoritos = remove
+					? store.favoritos.filter(fav => fav !== item)
+					: store.favoritos.includes(item)
+					? store.favoritos.filter(fav => fav !== item)
+					: [...store.favoritos, item];
+				setStore({ favoritos });
 			}
 		}
 	};
