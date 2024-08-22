@@ -2,19 +2,18 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 
+
 export const Navbar = () => {
-	const { store } = useContext(Context);
+	const { store, actions } = useContext(Context);
 
 	return (
-		<nav className="navbar navbar-light bg-light mb-3">
-
+		<nav className="navbar navbar-light bg-light mb-4">
 			<Link to="/">
 				<span className="navbar-brand mb-0 h1">React Boilerplate</span>
 			</Link>
 			
-			<div className="ml-auto">
+			<div className="ml-auto me-3">
                 <div className="dropdown">
-
                     <button 
                         className="btn btn-primary dropdown-toggle" 
                         type="button" 
@@ -25,25 +24,23 @@ export const Navbar = () => {
                         Favoritos
                     </button>
 
-
                     <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
                         {store.favoritos.length > 0 ? (
                             store.favoritos.map((item, index) => (
-                                <li key={index}>
-                                    <a className="dropdown-item" href="#">
-                                        {item}
-                                    </a>
+                                <li key={index} className="d-flex justify-content-between align-items-center">
+                                    <span className="dropdown-item">{item}</span>
+                                    <i  className="fa-solid fa-trash text-danger me-3" 
+                                        style={{color: "red"}}
+                                        onClick={() => actions.toggleFavorito(item, true)}
+                                    ></i>
                                 </li>
                             ))
                         ) : (
-
                             <li>
                                 <span className="dropdown-item">No hay favoritos</span>
                             </li>
-
                         )}
                     </ul>
-
                 </div>
 			</div>
 		</nav>

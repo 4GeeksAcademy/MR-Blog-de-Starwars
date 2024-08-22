@@ -42,7 +42,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				//reset the global store
 				setStore({ demo: demo });
 			}, 
-			
+
 			loadInitialData: () => {
 				getActions().fetchPersonas();
 				getActions().fetchVehiculos();
@@ -50,32 +50,82 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 			fetchPersonas: async () => {
-				const response = await fetch("https://www.swapi.tech/api/people");
-				const data = await response.json();
-				setStore({ personas: data.results });
+				try {
+					const response = await fetch("https://www.swapi.tech/api/people");
+					const data = await response.json();
+					
+					// Genera un array de promesas sin usar await en map
+					const personasDetailsPromises = data.results.map((persona) => {
+						return fetch(persona.url)
+							.then(responseDetails => responseDetails.json())
+							.then(dataDetails => dataDetails.result);
+					});
+			
+					// Usa Promise.all para resolver todas las promesas en paralelo
+					const personasDetails = await Promise.all(personasDetailsPromises);
+			
+					// Actualiza el store con los detalles de las personas
+					setStore({ personas: personasDetails });
+				} catch (error) {
+					console.error("Error fetching personas:", error);
+				}
 			},
 
 			fetchVehiculos: async () => {
-				const response = await fetch("https://www.swapi.tech/api/vehicles");
-				const data = await response.json();
-				setStore({ vehiculos: data.results });
+				try {
+					const response = await fetch("https://www.swapi.tech/api/vehicles");
+					const data = await response.json();
+					
+					// Genera un array de promesas sin usar await en map
+					const vehiculosDetailsPromises = data.results.map((vehiculo) => {
+						return fetch(vehiculo.url)
+							.then(responseDetails => responseDetails.json())
+							.then(dataDetails => dataDetails.result);
+					});
+			
+					// Usa Promise.all para resolver todas las promesas en paralelo
+					const vehiculosDetails = await Promise.all(vehiculosDetailsPromises);
+			
+					// Actualiza el store con los detalles de los vehiculos
+					setStore({ vehiculos: vehiculosDetails });
+				} catch (error) {
+					console.error("Error fetching vehiculos:", error);
+				}
 			},
 
 			fetchPlanetas: async () => {
-				const response = await fetch("https://www.swapi.tech/api/planets");
-				const data = await response.json();
-				setStore({ planetas: data.results });
+				try {
+					const response = await fetch("https://www.swapi.tech/api/planets");
+					const data = await response.json();
+					
+					// Genera un array de promesas sin usar await en map
+					const planetasDetailsPromises = data.results.map((planeta) => {
+						return fetch(planeta.url)
+							.then(responseDetails => responseDetails.json())
+							.then(dataDetails => dataDetails.result);
+					});
+			
+					// Usa Promise.all para resolver todas las promesas en paralelo
+					const planetasDetails = await Promise.all(planetasDetailsPromises);
+			
+					// Actualiza el store con los detalles de los planetas
+					setStore({ planet: planetasDetails });
+				} catch (error) {
+					console.error("Error fetching planetas:", error);
+				}
 			},
 
-			toggleFavorito: (item, remove = false) => {
-				const store = getStore();
-				const favoritos = remove
-					? store.favoritos.filter(fav => fav !== item)
-					: store.favoritos.includes(item)
-					? store.favoritos.filter(fav => fav !== item)
-					: [...store.favoritos, item];
-				setStore({ favoritos });
-			}
+
+
+toggleFavorito: (item, remove = false) => {
+    const store = getStore();
+    const favoritos = remove
+        ? store.favoritos.filter(fav => fav !== item)
+        : store.favoritos.includes(item)
+        ? store.favoritos.filter(fav => fav !== item)
+        : [...store.favoritos, item];
+    setStore({ favoritos });
+}
 		}
 	};
 };

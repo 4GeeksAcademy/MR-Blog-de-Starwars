@@ -6,7 +6,9 @@ import { Home } from "./views/home";
 import { Demo } from "./views/demo";
 import { Single } from "./views/single";
 import injectContext from "./store/appContext";
-
+import { ViewPlaneta } from "./views/ViewPlaneta.jsx";
+import { ViewVehiculo } from "./views/ViewVehiculo.jsx";
+import { ViewPersona } from "./views/ViewPersona.jsx";
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 
@@ -24,6 +26,9 @@ const Layout = () => {
 					<Routes>
 						<Route path="/" element={<Home />} />
 						<Route path="/demo" element={<Demo />} />
+						<Route path="/ViewPersona/:id" element={<ViewPersona />} />
+						<Route path="/ViewVehiculo/:id" element={<ViewVehiculo />} />
+						<Route path="/ViewPlaneta/:id" element={<ViewPlaneta />} />
 						<Route path="/single/:theid" element={<Single />} />
 						<Route path="*" element={<h1>Not found!</h1>} />
 					</Routes>
