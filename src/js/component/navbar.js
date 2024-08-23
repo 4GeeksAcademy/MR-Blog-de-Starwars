@@ -1,16 +1,18 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
-
+import rigoImage from "../../img/rigo-baby.jpg";
+import logo from "../../img/logo.png"
 
 export const Navbar = () => {
 	const { store, actions } = useContext(Context);
 
 	return (
-		<nav className="navbar navbar-light bg-light mb-4">
-			<Link to="/">
-				<span className="navbar-brand mb-0 h1">React Boilerplate</span>
-			</Link>
+		<nav className="navbar navbar-light mb-4" >
+
+            <Link to="/">
+                <img src={logo} alt="Logo" className="navbar-brand mb-0 h1"  />
+            </Link>
 			
 			<div className="ml-auto me-3">
                 <div className="dropdown">

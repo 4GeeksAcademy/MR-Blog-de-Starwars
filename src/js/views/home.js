@@ -17,8 +17,8 @@ export const Home = () => {
 					<div key={persona.uid} className="col-4">
 						<div className="card">
 							<img
-								src="https://via.placeholder.com/400x200"
-								alt="Imagen de ejemplo"
+								src={`https://starwars-visualguide.com/assets/img/characters/${persona.uid}.jpg`}
+								alt={`Imagen de ${persona.properties.name}`}
 								className="img-fluid"
 							/>
 							<div className="card-body">
@@ -58,8 +58,8 @@ export const Home = () => {
 					<div key={vehiculo.uid} className="col-4">
 						<div className="card">
 							<img
-								src="https://via.placeholder.com/400x200"
-								alt="Imagen de ejemplo"
+								src={`https://starwars-visualguide.com/assets/img/vehicles/${vehiculo.uid}.jpg`}
+								alt={`Imagen de ${vehiculo.properties.name}`}
 								className="img-fluid"
 							/>
 							<div className="card-body">
@@ -69,7 +69,7 @@ export const Home = () => {
 
 								<div className="d-flex justify-content-between mt-3">
 
-								<Link to={`/ViewVehiculo/${vehiculo.uid}`}>
+									<Link to={`/ViewVehiculo/${vehiculo.uid}`}>
 										<button className="btn btn-outline-primary mr-2">
 											Leer más!
 										</button>
@@ -100,10 +100,11 @@ export const Home = () => {
 					<div key={planeta.uid} className="col-4">
 						<div className="card">
 							<img
-								src="https://via.placeholder.com/400x200"
-								alt="Imagen de ejemplo"
+								src={`https://starwars-visualguide.com/assets/img/planets/${planeta.uid}.jpg`}
+								alt={`Imagen de ${planeta.properties.name}`}
 								className="img-fluid"
 							/>
+
 							<div className="card-body">
 								<h5 className="card-title display-6">{planeta.properties.name}</h5><br />
 								<p><strong>Poblacion:</strong> {planeta.properties.population}</p>
@@ -112,7 +113,7 @@ export const Home = () => {
 
 								<div className="d-flex justify-content-between mt-3">
 
-								<Link to={`/ViewPlaneta/${planeta.uid}`}>
+									<Link to={`/ViewPlaneta/${planeta.uid}`}>
 										<button className="btn btn-outline-primary mr-2">
 											Leer más!
 										</button>
